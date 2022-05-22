@@ -10,7 +10,6 @@ class BooksController < ApplicationController
      redirect_to book_path(@book.id)
    else
      @books = Book.all
-     flash.now[:alert] = 'メッセージを入力してください'
      render :index
    end
   end
@@ -26,16 +25,15 @@ class BooksController < ApplicationController
 
   def edit
     @book = Book.find(params[:id])
+    
   end
   
   def update
-    book = Book.find(params[:id])
-    if book.update(book_params)
+    @book = Book.find(params[:id])
+    if @book.update(book_params)
        flash[:notice] = 'Book was successfully updated.'
-       redirect_to book_path(book.id)
+       redirect_to book_path(@book.id)
     else
-      flash.now[:alert] = 'メッセージを入力してください'
-      @book = Book.find(params[:id])
       render :edit
     end
   end
@@ -43,7 +41,7 @@ class BooksController < ApplicationController
   def destroy
     book = Book.find(params[:id])
     book.destroy
-    flash[:notice] = '本は無事に破壊されました。'
+    flash[:notice] = 'Book was successfully destroyed.。'
     redirect_to '/books'
   end
   
